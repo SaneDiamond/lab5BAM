@@ -120,14 +120,15 @@ public class BookStore {
 
     // Optional: Method to display all novels
     public void displayAllNovels() {
-        for (Novel novel : novels) {
+        for (final Novel novel : novels) {
             System.out.println(novel);
         }
     }
 
     // Optional: Main method for testing
     public static void main(String[] args) {
-        BookStore store = new BookStore();
+        BookStore store;
+        store = new BookStore();
         store.displayAllNovels();
     }
 }
