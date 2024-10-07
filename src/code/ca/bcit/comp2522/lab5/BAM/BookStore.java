@@ -2,20 +2,10 @@ package ca.bcit.comp2522.lab5.BAM;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
-/**
- * Class that simulates a BookStore with a name and list of novels and
- * methods that make operations with the books in the class.
- *
- * @author Marcus Vinicius Santos Lages
- * @author Ben Nguyen
- * @author Andre Dizon
- *
- * @version 1.0.0
- */
 public class BookStore {
-
     private static final int MIN_AMOUNT_BOOKS = 0;
     private static final double ZERO_CHANCE = 0.0;
     private static final double RATIO_TO_PERCENTAGE = 100.0;
@@ -231,6 +221,58 @@ public class BookStore {
         return result;
     }
 
+    /**
+     * Prints the list of books by the decade entered
+     * @param decade allows the user to sort by the decade inputted
+     */
+    public void printGroupByDecade(final int decade) {
+        // start year
+        final int startYear = decade;
+        // end year for decade
+        final int endYear = decade + 9;
+
+        StringBuilder sb;
+        sb = new StringBuilder();
+        sb.append("Books from the ")
+                .append(decade)
+                .append("s:\n");
+
+        boolean booksFound = false;
+
+        // Loop through novels and check if they fall within the decade
+        for (Novel novel : novels) {
+            int year = novel.getYearPublished();
+            if (year >= startYear && year <= endYear) {
+                sb.append("- ")
+                        .append(novel.getTitle())
+                        .append(" (")
+                        .append(year)
+                        .append(")\n");
+                booksFound = true;
+            }
+        }
+
+        // me when no books
+        if (!booksFound) {
+            sb.append("No books in decade");
+        }
+        System.out.println(sb.toString());
+    }
+
+    /**
+     * returns the oldest book
+     */
+    public void getOldestBook(){
+        final List<Novel> novelList;
+        novelList = new ArrayList<>();
+        final StringBuilder sb;
+        sb = new StringBuilder();
+
+        sb.append("The max value is: ")
+                .append(Collections.max(novels, Comparator.comparing(Novel::getYearPublished)));
+        }
+    }
+
     // Optional: Main method for testing
     public static void main(final String[] args) {
         final BookStore bookstore;
@@ -241,38 +283,39 @@ public class BookStore {
 
         System.out.println("All Titles in UPPERCASE:");
         bookstore.printAllTitles();
-        
+
         System.out.println("\nBook Titles Containing 'the':");
         bookstore.printBookTitle("the");
-        
+
         System.out.println("\nAll Titles in Alphabetical Order:");
         bookstore.printTitlesInAlphaOrder();
-        
+
         System.out.println("\nBooks from the 2000s:");
         bookstore.printGroupByDecade(2000);
-        
+
         System.out.println("\nLongest Book Title:");
         bookstore.getLongest();
-        
+
         System.out.println("\nIs there a book written in 1950?");
         System.out.println(bookstore.isThereABookWrittenBetween(1950));
-        
+
         System.out.println("\nHow many books contain 'heart'?");
         System.out.println(bookstore.howManyBooksContain("heart"));
-        
+
         System.out.println("\nPercentage of books written between 1940 and 1950:");
         System.out.println(bookstore.whichPercentWrittenBetween(1940, 1950) + "%");
-        
+
         System.out.println("\nOldest book:");
         oldest = bookstore.getOldestBook();
-        
+
         System.out.println(oldest.getTitle() + " by " + oldest.getAuthorName() + ", " +
                 oldest.getYearPublished());
-        
+
         System.out.println("\nBooks with titles 15 characters long:");
         fifteenCharTitles = bookstore.getBooksThisLength(15);
-        
+
         fifteenCharTitles.forEach(novel -> System.out.println(novel.getTitle()));
     }
+
 }
 
