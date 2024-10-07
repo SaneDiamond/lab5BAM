@@ -1,14 +1,32 @@
 package ca.bcit.comp2522.lab5.BAM;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+/**
+ * Class that simulates a BookStore with a name and list of novels and
+ * methods that make operations with the books in the class.
+ *
+ * @author Marcus Vinicius Santos Lages
+ * @author Ben Nguyen
+ * @author Andre Dizon
+ *
+ * @version 1.0.0
+ */
 public class BookStore {
-    private List<Novel> novels;
+
+    private static final int MIN_AMOUNT_BOOKS = 0;
+    private static final double ZERO_CHANCE = 0.0;
+    private static final double RATIO_TO_PERCENTAGE = 100.0;
+
+    private final String name;
+    private final List<Novel> novels;
 
     // Constructor
-    public BookStore() {
+    public BookStore(final String name) {
         novels = new ArrayList<>();
+        this.name = name;
 
         // Populating the list with the provided data
         novels.add(new Novel("The Adventures of Augie March", "Saul Bellow", 1953));
@@ -118,10 +136,15 @@ public class BookStore {
         return novels;
     }
 
-    // Optional: Method to display all novels
-    public void displayAllNovels() {
+    /**
+     * Prints the title of all books in the bookstore/novels list
+     * in uppercase.
+     */
+    public void printAllTitles() {
         for (final Novel novel : novels) {
-            System.out.println(novel);
+            final String title;
+            title = novel.getTitle();
+            System.out.println(title.toUpperCase());
         }
     }
 
@@ -166,16 +189,21 @@ public class BookStore {
     }
 
     /**
-     * What percentage of the books
-     * were written between these two
-     * years (inclusive)?
+     * Returns the percentage (between 0.0 and 100.0) of how many novels in the bookstore/novels list
+     * were published in the interval of years specified (inclusive) in relation to all the books
+     * in the bookstore.
      *
-     * @param startYear
-     * @param endYear
-     * @return
+     * @param startYear first year of the interval
+     * @param endYear last year of the interval
+     * @return percentage of how many novels were published in the specified interval
      */
     public double whichPercentWrittenBetween(final int startYear,
                                              final int endYear) {
+
+        // A larger start year than end year is invalid, chance is ZERO_CHANCE
+        if(startYear > endYear) {
+            return ZERO_CHANCE;
+        }
 
         final int allBooks;
         int booksInRange;
@@ -183,7 +211,7 @@ public class BookStore {
 
         allBooks = novels.size();
         booksInRange = MIN_AMOUNT_BOOKS;
-        result = INITIAL_PERCENTAGE;
+        result = ZERO_CHANCE;
 
         for(final Novel novel: novels) {
             final int novelsYearPublished;
@@ -194,18 +222,57 @@ public class BookStore {
             }
         }
 
+        // If there's no books in range, then the percentage is ZERO_CHANCE
         if(booksInRange >= MIN_AMOUNT_BOOKS) {
             result = (double) booksInRange / allBooks;
+            result *= RATIO_TO_PERCENTAGE;
         }
 
         return result;
     }
 
     // Optional: Main method for testing
-    public static void main(String[] args) {
-        BookStore store;
-        store = new BookStore();
-        store.displayAllNovels();
+    public static void main(final String[] args) {
+        final BookStore bookstore;
+        final Novel oldest;
+        final List<Novel> fifteenCharTitles;
+
+        bookstore = new BookStore("Classic Novels Collection");
+
+        System.out.println("All Titles in UPPERCASE:");
+        bookstore.printAllTitles();
+        
+        System.out.println("\nBook Titles Containing 'the':");
+        bookstore.printBookTitle("the");
+        
+        System.out.println("\nAll Titles in Alphabetical Order:");
+        bookstore.printTitlesInAlphaOrder();
+        
+        System.out.println("\nBooks from the 2000s:");
+        bookstore.printGroupByDecade(2000);
+        
+        System.out.println("\nLongest Book Title:");
+        bookstore.getLongest();
+        
+        System.out.println("\nIs there a book written in 1950?");
+        System.out.println(bookstore.isThereABookWrittenBetween(1950));
+        
+        System.out.println("\nHow many books contain 'heart'?");
+        System.out.println(bookstore.howManyBooksContain("heart"));
+        
+        System.out.println("\nPercentage of books written between 1940 and 1950:");
+        System.out.println(bookstore.whichPercentWrittenBetween(1940, 1950) + "%");
+        
+        System.out.println("\nOldest book:");
+        oldest = bookstore.getOldestBook();
+        
+        System.out.println(oldest.getTitle() + " by " + oldest.getAuthorName() + ", " +
+                oldest.getYearPublished());
+        
+        System.out.println("\nBooks with titles 15 characters long:");
+        fifteenCharTitles = bookstore.getBooksThisLength(15);
+        
+        fifteenCharTitles.forEach(novel -> System.out.println(novel.getTitle()));
     }
 }
 
