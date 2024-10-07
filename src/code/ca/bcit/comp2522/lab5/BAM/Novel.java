@@ -24,6 +24,14 @@ public class Novel
         return yearPublished;
     }
 
+    /**
+     * Compares a novel to another novel based on their title (alphabetically).
+     *
+     * @param novel the object to be compared.
+     * @return 0: if they have the same title,
+     *         less than 0: if this novel comes before than the specified object (alphabetically)
+     *         greater than 0: if this novel comes after than the specified object (alphabetically)
+     */
     @Override
     public int compareTo(final Novel novel) {
         final int comparison;
