@@ -125,6 +125,82 @@ public class BookStore {
         }
     }
 
+    /**
+     * Prints the titles of all books in alphabetical order using
+     * the implemented compareTo() from the Novel class.
+     */
+    public void printTitlesInAlphaOrder() {
+
+        final List<Novel> novelsCopy;
+        novelsCopy = new ArrayList<>();
+
+        Collections.copy(novelsCopy, novels);
+        Collections.sort(novelsCopy);
+
+        for (final Novel novel : novelsCopy) {
+            final String title;
+            title = novel.getTitle();
+            System.out.println(title.toUpperCase());
+        }
+    }
+
+    /**
+     * Checks if there's any book published in the specified year
+     * in the catalog.
+     *
+     * @param yearPublished year published that will be searched for in the catalog
+     * @return true if a book published in the specified year was found
+     */
+    public boolean isThereABookWrittenIn(final int yearPublished) {
+
+        for (final Novel novel : novels) {
+            final int novelsYearPublished;
+            novelsYearPublished = novel.getYearPublished();
+
+            if(novelsYearPublished == yearPublished) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * What percentage of the books
+     * were written between these two
+     * years (inclusive)?
+     *
+     * @param startYear
+     * @param endYear
+     * @return
+     */
+    public double whichPercentWrittenBetween(final int startYear,
+                                             final int endYear) {
+
+        final int allBooks;
+        int booksInRange;
+        double result;
+
+        allBooks = novels.size();
+        booksInRange = MIN_AMOUNT_BOOKS;
+        result = INITIAL_PERCENTAGE;
+
+        for(final Novel novel: novels) {
+            final int novelsYearPublished;
+            novelsYearPublished = novel.getYearPublished();
+
+            if(novelsYearPublished >= startYear && novelsYearPublished <= endYear) {
+                booksInRange++;
+            }
+        }
+
+        if(booksInRange >= MIN_AMOUNT_BOOKS) {
+            result = (double) booksInRange / allBooks;
+        }
+
+        return result;
+    }
+
     // Optional: Main method for testing
     public static void main(String[] args) {
         BookStore store;
