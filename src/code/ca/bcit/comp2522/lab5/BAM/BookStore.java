@@ -448,10 +448,10 @@ public class BookStore {
         System.out.println(oldest.getTitle() + " by " + oldest.getAuthorName() + ", " +
                 oldest.getYearPublished());
 
-//        System.out.println("\nBooks with titles 15 characters long:");
-//        fifteenCharTitles = bookstore.getBooksThisLength(15);
+        System.out.println("\nBooks with titles 15 characters long:");
+        fifteenCharTitles = bookstore.getBooksThisLength(15);
 
-//        fifteenCharTitles.forEach(novel -> System.out.println(novel.getTitle()));
+        fifteenCharTitles.forEach(novel -> System.out.println(novel.getTitle()));
     }
 
 }
