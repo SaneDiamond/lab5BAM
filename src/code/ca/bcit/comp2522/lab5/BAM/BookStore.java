@@ -334,8 +334,9 @@ public class BookStore {
      */
     private void printAllTitlesUsingIterator() {
         System.out.println("\nAll Titles in the BookStore:");
-        Set<String> keySet = novelMap.keySet();
-        Iterator<String> iterator = keySet.iterator();
+        // do finals even go here bruh
+        final Set<String> keySet = novelMap.keySet();
+        final Iterator<String> iterator = keySet.iterator();
 
         while (iterator.hasNext()) {
             String title = iterator.next();
@@ -348,11 +349,11 @@ public class BookStore {
     private void removeNovelsWithTitleContainingThe() {
         System.out.println("\nRemoving novels with titles containing \"the\"...");
 
-        Iterator<Map.Entry<String, Novel>> iterator = novelMap.entrySet().iterator();
+        final Iterator<Map.Entry<String, Novel>> iterator = novelMap.entrySet().iterator();
 
         while (iterator.hasNext()) {
             Map.Entry<String, Novel> entry = iterator.next();
-            String title = entry.getKey();
+            final String title = entry.getKey();
 
             if (title.toLowerCase().contains("the")) {
                 iterator.remove();
@@ -366,11 +367,11 @@ public class BookStore {
      */
     private void printSortedNovels() {
         System.out.println("\nNovels sorted by title (excluding titles containing \"the\"):");
-        Set<String> keySet = novelMap.keySet();
-        List<String> sortedTitles = new ArrayList<>(keySet);
+        final Set<String> keySet = novelMap.keySet();
+        final List<String> sortedTitles = new ArrayList<>(keySet);
         Collections.sort(sortedTitles);
 
-        for (String title : sortedTitles) {
+        for (final String title : sortedTitles) {
             Novel novel = novelMap.get(title);
             System.out.println(novel.toString());
         }
