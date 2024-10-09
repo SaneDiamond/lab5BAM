@@ -1,5 +1,6 @@
 package ca.bcit.comp2522.lab5.BAM;
-
+import java.util.Iterator;
+import java.util.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -11,14 +12,19 @@ public class BookStore {
     private static final double RATIO_TO_PERCENTAGE = 100.0;
     private static final int CONTAINS_NOTHING = 0;
 
+    private static final int END_YEAR = 9;
 
     private final String name;
     private final List<Novel> novels;
+    private final Map<String, Novel> novelMap;
+
+
 
     // Constructor
     public BookStore(final String name) {
         novels = new ArrayList<>();
         this.name = name;
+        novelMap = new HashMap<>();
 
         // Populating the list with the provided data
         novels.add(new Novel("The Adventures of Augie March", "Saul Bellow", 1953));
@@ -121,6 +127,12 @@ public class BookStore {
         novels.add(new Novel("White Noise", "Don DeLillo", 1985));
         novels.add(new Novel("White Teeth", "Zadie Smith", 2000));
         novels.add(new Novel("Wide Sargasso Sea", "Jean Rhys", 1966));
+
+        // Populating the novelMap using the author as the key
+        for (Novel novel : novels) {
+            // key: author, value: novel
+            novelMap.put(novel.getAuthorName(), novel);
+        }
     }
 
     // Getter for the novels list
@@ -271,12 +283,10 @@ public class BookStore {
      * @param decade allows the user to sort by the decade inputted
      */
     public void printGroupByDecade(final int decade) {
-        // start year
         final int startYear = decade;
-        // end year for decade
-        final int endYear = decade + 9;
+        final int endYear = decade + END_YEAR;
 
-        StringBuilder sb;
+        final StringBuilder sb;
         sb = new StringBuilder();
         sb.append("Books from the ")
                 .append(decade)
@@ -285,8 +295,8 @@ public class BookStore {
         boolean booksFound = false;
 
         // Loop through novels and check if they fall within the decade
-        for (Novel novel : novels) {
-            int year = novel.getYearPublished();
+        for (final Novel novel : novels) {
+            final int year = novel.getYearPublished();
             if (year >= startYear && year <= endYear) {
                 sb.append("- ")
                         .append(novel.getTitle())
@@ -307,14 +317,62 @@ public class BookStore {
     /**
      * returns the oldest book
      */
-    public void getOldestBook(){
+    public Novel getOldestBook(){
         final List<Novel> novelList;
         novelList = new ArrayList<>();
         final StringBuilder sb;
         sb = new StringBuilder();
 
-        sb.append("The max value is: ")
-                .append(Collections.max(novels, Comparator.comparing(Novel::getYearPublished)));
+        final Novel oldestNovel;
+        oldestNovel = Collections.max(novels);
+
+        return oldestNovel;
+        }
+
+    /**
+     * Prints all titles using an Iterator with map
+     */
+    private void printAllTitlesUsingIterator() {
+        System.out.println("\nAll Titles in the BookStore:");
+        Set<String> keySet = novelMap.keySet();
+        Iterator<String> iterator = keySet.iterator();
+
+        while (iterator.hasNext()) {
+            String title = iterator.next();
+            System.out.println(title);
+        }
+    }
+    /**
+     * Removes all novels whose title contains "the"
+     */
+    private void removeNovelsWithTitleContainingThe() {
+        System.out.println("\nRemoving novels with titles containing \"the\"...");
+
+        Iterator<Map.Entry<String, Novel>> iterator = novelMap.entrySet().iterator();
+
+        while (iterator.hasNext()) {
+            Map.Entry<String, Novel> entry = iterator.next();
+            String title = entry.getKey();
+
+            if (title.toLowerCase().contains("the")) {
+                iterator.remove();
+                System.out.println("Removed: " + title);
+            }
+        }
+    }
+
+    /**
+     * Prints the novels // need to be sorted by order
+     */
+    private void printSortedNovels() {
+        System.out.println("\nNovels sorted by title (excluding titles containing \"the\"):");
+        Set<String> keySet = novelMap.keySet();
+        List<String> sortedTitles = new ArrayList<>(keySet);
+        Collections.sort(sortedTitles);
+
+        for (String title : sortedTitles) {
+            Novel novel = novelMap.get(title);
+            System.out.println(novel.toString());
         }
     }
 
