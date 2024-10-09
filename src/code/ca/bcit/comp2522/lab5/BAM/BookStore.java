@@ -336,6 +336,8 @@ public class BookStore {
     /**
      * Prints all titles using an Iterator with map
      */
+    // Marcus:
+    // - You don't need to use map
     private void printAllTitlesUsingIterator() {
         System.out.println("\nAll Titles in the BookStore:");
         // do finals even go here bruh
