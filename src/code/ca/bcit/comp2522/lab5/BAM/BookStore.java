@@ -156,6 +156,8 @@ public class BookStore {
         final String novelTitleParameter;
         novelTitleParameter = "the";
         for (final Novel novel : novels) {
+            // Marcus:
+            // - Easier to just put novel.getTitle() in a variable
             if (novel.getTitle().toLowerCase().contains(novelTitleParameter.toLowerCase())) {
                 System.out.println(novel.getTitle());
             }
@@ -345,13 +347,16 @@ public class BookStore {
         while (iterator.hasNext()) {
             // Marcus:
             // - Not final
-            String title = iterator.next();
-            System.out.println(title);
+            String key = iterator.next();
+            Novel n = novelMap.get(key);
+            System.out.println(n);
         }
     }
     /**
      * Removes all novels whose title contains "the"
      */
+    // Marcus:
+    // - Iterate through list instead of hasmap
     private void removeNovelsWithTitleContainingThe() {
         System.out.println("\nRemoving novels with titles containing \"the\"...");
 
@@ -375,7 +380,6 @@ public class BookStore {
      * Prints the novels // need to be sorted by order
      */
     // Marcus:
-    // - Why are you using String and not Novel?
     // - Why don't you just copy the list and use Collections.sort()
     private void printSortedNovels() {
         System.out.println("\nNovels sorted by title (excluding titles containing \"the\"):");
