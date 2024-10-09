@@ -129,7 +129,7 @@ public class BookStore {
         novels.add(new Novel("Wide Sargasso Sea", "Jean Rhys", 1966));
 
         // Populating the novelMap using the author as the key
-        for (Novel novel : novels) {
+        for (final Novel novel : novels) {
             // key: author, value: novel
             novelMap.put(novel.getAuthorName(), novel);
         }
@@ -170,10 +170,7 @@ public class BookStore {
     public void printTitlesInAlphaOrder() {
 
         final List<Novel> novelsCopy;
-        novelsCopy = new ArrayList<>();
-
-        Collections.copy(novelsCopy, novels);
-        Collections.sort(novelsCopy);
+        novelsCopy = new ArrayList<>(novels);
 
         for (final Novel novel : novelsCopy) {
             final String title;
@@ -186,6 +183,8 @@ public class BookStore {
         String longestTitle = "";
 
         for (final Novel novel : novels) {
+            // Marcus:
+            // - Split declaration and instantiation
             final String title = novel.getTitle();
             if (title.length() > longestTitle.length()) {
                 longestTitle = title;
@@ -216,6 +215,8 @@ public class BookStore {
         return false;
     }
 
+    // Marcus:
+    // - Argument not final
     public int howManyBooksContain(String word) {
         if (word == null) {
             throw new IllegalArgumentException("Word cannot be null.");
@@ -320,6 +321,7 @@ public class BookStore {
     public Novel getOldestBook(){
         final List<Novel> novelList;
         novelList = new ArrayList<>();
+
         final StringBuilder sb;
         sb = new StringBuilder();
 
@@ -335,10 +337,14 @@ public class BookStore {
     private void printAllTitlesUsingIterator() {
         System.out.println("\nAll Titles in the BookStore:");
         // do finals even go here bruh
+        // Marcus: they do, but you are missing splitting declaration and instantiation
+        //         why is it a String too?
         final Set<String> keySet = novelMap.keySet();
         final Iterator<String> iterator = keySet.iterator();
 
         while (iterator.hasNext()) {
+            // Marcus:
+            // - Not final
             String title = iterator.next();
             System.out.println(title);
         }
@@ -352,6 +358,9 @@ public class BookStore {
         final Iterator<Map.Entry<String, Novel>> iterator = novelMap.entrySet().iterator();
 
         while (iterator.hasNext()) {
+            // Marcus:
+            // - Not final
+            // - Separate declaration and instantiation
             Map.Entry<String, Novel> entry = iterator.next();
             final String title = entry.getKey();
 
@@ -365,18 +374,28 @@ public class BookStore {
     /**
      * Prints the novels // need to be sorted by order
      */
+    // Marcus:
+    // - Why are you using String and not Novel?
+    // - Why don't you just copy the list and use Collections.sort()
     private void printSortedNovels() {
         System.out.println("\nNovels sorted by title (excluding titles containing \"the\"):");
+        // Marcus:
+        // - Separate declaration and instantiation
         final Set<String> keySet = novelMap.keySet();
         final List<String> sortedTitles = new ArrayList<>(keySet);
         Collections.sort(sortedTitles);
 
         for (final String title : sortedTitles) {
+            // Marcus:
+            // - No final
             Novel novel = novelMap.get(title);
             System.out.println(novel.toString());
         }
     }
 
+    // Marcus:
+    // - Why strings? We are using novels
+    // - no final for titleLength
     public List<String> getBooksThisLength(int titleLength) {
         final List<String> titles;
         titles = new ArrayList<>();
@@ -415,7 +434,7 @@ public class BookStore {
         bookstore.getLongest();
 
         System.out.println("\nIs there a book written in 1950?");
-        System.out.println(bookstore.isThereABookWrittenBetween(1950));
+        System.out.println(bookstore.isThereABookWrittenIn(1950));
 
         System.out.println("\nHow many books contain 'heart'?");
         System.out.println(bookstore.howManyBooksContain("heart"));
@@ -429,10 +448,10 @@ public class BookStore {
         System.out.println(oldest.getTitle() + " by " + oldest.getAuthorName() + ", " +
                 oldest.getYearPublished());
 
-        System.out.println("\nBooks with titles 15 characters long:");
-        fifteenCharTitles = bookstore.getBooksThisLength(15);
+//        System.out.println("\nBooks with titles 15 characters long:");
+//        fifteenCharTitles = bookstore.getBooksThisLength(15);
 
-        fifteenCharTitles.forEach(novel -> System.out.println(novel.getTitle()));
+//        fifteenCharTitles.forEach(novel -> System.out.println(novel.getTitle()));
     }
 
 }
