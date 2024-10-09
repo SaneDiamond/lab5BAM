@@ -9,6 +9,8 @@ public class BookStore {
     private static final int MIN_AMOUNT_BOOKS = 0;
     private static final double ZERO_CHANCE = 0.0;
     private static final double RATIO_TO_PERCENTAGE = 100.0;
+    private static final int CONTAINS_NOTHING = 0;
+
 
     private final String name;
     private final List<Novel> novels;
@@ -138,6 +140,17 @@ public class BookStore {
         }
     }
 
+    public void printBookTitle(final String title) {
+        final String novelTitleParameter;
+        novelTitleParameter = "the";
+        for (final Novel novel : novels) {
+            if (novel.getTitle().toLowerCase().contains(novelTitleParameter.toLowerCase())) {
+                System.out.println(novel.getTitle());
+            }
+        }
+
+    }
+
     /**
      * Prints the titles of all books in alphabetical order using
      * the implemented compareTo() from the Novel class.
@@ -155,6 +168,19 @@ public class BookStore {
             title = novel.getTitle();
             System.out.println(title.toUpperCase());
         }
+    }
+
+    public void getLongest() {
+        String longestTitle = "";
+
+        for (final Novel novel : novels) {
+            final String title = novel.getTitle();
+            if (title.length() > longestTitle.length()) {
+                longestTitle = title;
+            }
+        }
+
+        System.out.println(longestTitle);
     }
 
     /**
@@ -176,6 +202,25 @@ public class BookStore {
         }
 
         return false;
+    }
+
+    public int howManyBooksContain(String word) {
+        if (word == null) {
+            throw new IllegalArgumentException("Word cannot be null.");
+        }
+
+        if (word.isBlank()) {
+            throw new IllegalArgumentException("Word cannot be blank.");
+        }
+        int wordContainedWithin;
+        wordContainedWithin = CONTAINS_NOTHING;
+        for (final Novel novel : novels) {
+            if (novel.getTitle().toLowerCase().contains(word.toLowerCase())) {
+                wordContainedWithin++;
+            }
+
+        }
+        return wordContainedWithin;
     }
 
     /**
@@ -272,6 +317,20 @@ public class BookStore {
                 .append(Collections.max(novels, Comparator.comparing(Novel::getYearPublished)));
         }
     }
+
+    public List<String> getBooksThisLength(int titleLength) {
+        final List<String> titles;
+        titles = new ArrayList<>();
+
+        for (final Novel novel : novels) {
+            if (novel.getTitle().length() == titleLength) {
+                titles.add(novel.getTitle());
+            }
+
+        }
+        return titles;
+    }
+
 
     // Optional: Main method for testing
     public static void main(final String[] args) {
