@@ -294,7 +294,7 @@ public class BookStore {
         }
     }
     /**
-     * Removes all novels whose title contains "the" (case-insensitive)
+     * Removes all novels whose title contains "the"
      */
     private void removeNovelsWithTitleContainingThe() {
         System.out.println("\nRemoving novels with titles containing \"the\"...");
@@ -313,12 +313,13 @@ public class BookStore {
     }
 
     /**
-     * Prints the novels sorted by title after removal
+     * Prints the novels // need to be sorted by order
      */
     private void printSortedNovels() {
         System.out.println("\nNovels sorted by title (excluding titles containing \"the\"):");
         Set<String> keySet = novelMap.keySet();
         List<String> sortedTitles = new ArrayList<>(keySet);
+        Collections.sort(sortedTitles);
 
         for (String title : sortedTitles) {
             Novel novel = novelMap.get(title);
