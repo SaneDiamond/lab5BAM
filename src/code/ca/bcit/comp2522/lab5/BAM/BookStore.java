@@ -161,14 +161,17 @@ public class BookStore {
     public void printBookTitle(final String title) {
         final String novelTitleParameter;
         novelTitleParameter = "the";
+
+
         for (final Novel novel : novels) {
-            // Marcus:
-            // - Easier to just put novel.getTitle() in a variable
-            if (novel.getTitle().toLowerCase().contains(novelTitleParameter.toLowerCase())) {
-                System.out.println(novel.getTitle());
+            final String novelTitle;
+            novelTitle = novel.getTitle();
+            if (!(novelTitle == null || novelTitle.isEmpty())) {
+                if (novelTitle.toLowerCase().contains(novelTitleParameter.toLowerCase())) {
+                    System.out.println(novel.getTitle());
+                }
             }
         }
-
     }
 
     /**
@@ -191,14 +194,14 @@ public class BookStore {
         String longestTitle = "";
 
         for (final Novel novel : novels) {
-            // Marcus:
-            // - Split declaration and instantiation
-            final String title = novel.getTitle();
-            if (title.length() > longestTitle.length()) {
-                longestTitle = title;
+            if (!(novel == null)) {
+                final String title;
+                title = novel.getTitle();
+                if (title.length() > longestTitle.length()) {
+                    longestTitle = title;
+                }
             }
         }
-
         System.out.println(longestTitle);
     }
 
@@ -223,9 +226,8 @@ public class BookStore {
         return false;
     }
 
-    // Marcus:
-    // - Argument not final
-    public int howManyBooksContain(String word) {
+
+    public int howManyBooksContain(final String word) {
         if (word == null) {
             throw new IllegalArgumentException("Word cannot be null.");
         }
@@ -342,6 +344,8 @@ public class BookStore {
     /**
      * Prints all titles using an Iterator with map
      */
+    // Marcus:
+    // - You don't need to use map
     private void printAllTitlesUsingIterator() {
         System.out.println("\nAll Titles in the BookStore:");
         // why is it a String too?
@@ -401,18 +405,17 @@ public class BookStore {
         }
     }
 
-    // Marcus:
-    // - Why strings? We are using novels
-    // - no final for titleLength
-    public List<String> getBooksThisLength(int titleLength) {
-        final List<String> titles;
+    public List<Novel> getBooksThisLength(final int titleLength) {
+        final List<Novel> titles;
         titles = new ArrayList<>();
 
         for (final Novel novel : novels) {
-            if (novel.getTitle().length() == titleLength) {
-                titles.add(novel.getTitle());
-            }
+            if (!(novel == null)) {
+                if (novel.getTitle().length() == titleLength) {
+                    titles.add(novel);
+                }
 
+            }
         }
         return titles;
     }
