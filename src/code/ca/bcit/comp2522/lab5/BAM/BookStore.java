@@ -133,6 +133,12 @@ public class BookStore {
             // key: author, value: novel
             novelMap.put(novel.getAuthorName(), novel);
         }
+        //creating a bookshop instance
+        Bookshop manager = new Bookshop(novels);
+        manager.printAllTitlesUsingIterator();
+        manager.removeTitlesContainingThe();
+        manager.printSortedNovelsExcludingThe();
+
     }
 
     // Getter for the novels list
@@ -338,16 +344,14 @@ public class BookStore {
      */
     private void printAllTitlesUsingIterator() {
         System.out.println("\nAll Titles in the BookStore:");
-        // do finals even go here bruh
-        // Marcus: they do, but you are missing splitting declaration and instantiation
-        //         why is it a String too?
-        final Set<String> keySet = novelMap.keySet();
+        // why is it a String too?
+        final Set<String> keySet;
+        keySet = novelMap.keySet();
         final Iterator<String> iterator = keySet.iterator();
 
         while (iterator.hasNext()) {
-            // Marcus:
-            // - Not final
-            String key = iterator.next();
+            final String key ;
+            key = iterator.next();
             Novel n = novelMap.get(key);
             System.out.println(n);
         }
@@ -363,10 +367,9 @@ public class BookStore {
         final Iterator<Map.Entry<String, Novel>> iterator = novelMap.entrySet().iterator();
 
         while (iterator.hasNext()) {
-            // Marcus:
-            // - Not final
-            // - Separate declaration and instantiation
-            Map.Entry<String, Novel> entry = iterator.next();
+            final Map.Entry<String, Novel> entry;
+            entry = iterator.next();
+
             final String title = entry.getKey();
 
             if (title.toLowerCase().contains("the")) {
@@ -381,18 +384,19 @@ public class BookStore {
      */
     // Marcus:
     // - Why don't you just copy the list and use Collections.sort()
+    // Ben:
+    // - uwu uwu nyah meow meow
     private void printSortedNovels() {
         System.out.println("\nNovels sorted by title (excluding titles containing \"the\"):");
-        // Marcus:
-        // - Separate declaration and instantiation
-        final Set<String> keySet = novelMap.keySet();
-        final List<String> sortedTitles = new ArrayList<>(keySet);
+        final Set<String> keySet;
+        final List<String> sortedTitles;
+
+        keySet = novelMap.keySet();
+        sortedTitles = new ArrayList<>(keySet);
         Collections.sort(sortedTitles);
 
         for (final String title : sortedTitles) {
-            // Marcus:
-            // - No final
-            Novel novel = novelMap.get(title);
+            final Novel novel = novelMap.get(title);
             System.out.println(novel.toString());
         }
     }
