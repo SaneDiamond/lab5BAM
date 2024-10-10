@@ -155,10 +155,13 @@ public class BookStore {
     public void printBookTitle(final String title) {
         final String novelTitleParameter;
         novelTitleParameter = "the";
+
+
         for (final Novel novel : novels) {
-            // Marcus:
-            // - Easier to just put novel.getTitle() in a variable
-            if (novel.getTitle().toLowerCase().contains(novelTitleParameter.toLowerCase())) {
+            final String novelTitle;
+            novelTitle = novel.getTitle();
+
+            if (novelTitle.toLowerCase().contains(novelTitleParameter.toLowerCase())) {
                 System.out.println(novel.getTitle());
             }
         }
@@ -185,9 +188,9 @@ public class BookStore {
         String longestTitle = "";
 
         for (final Novel novel : novels) {
-            // Marcus:
-            // - Split declaration and instantiation
-            final String title = novel.getTitle();
+
+            final String title;
+            title = novel.getTitle();
             if (title.length() > longestTitle.length()) {
                 longestTitle = title;
             }
@@ -217,9 +220,8 @@ public class BookStore {
         return false;
     }
 
-    // Marcus:
-    // - Argument not final
-    public int howManyBooksContain(String word) {
+
+    public int howManyBooksContain(final String word) {
         if (word == null) {
             throw new IllegalArgumentException("Word cannot be null.");
         }
@@ -399,16 +401,13 @@ public class BookStore {
         }
     }
 
-    // Marcus:
-    // - Why strings? We are using novels
-    // - no final for titleLength
-    public List<String> getBooksThisLength(int titleLength) {
-        final List<String> titles;
+    public List<Novel> getBooksThisLength(final int titleLength) {
+        final List<Novel> titles;
         titles = new ArrayList<>();
 
         for (final Novel novel : novels) {
             if (novel.getTitle().length() == titleLength) {
-                titles.add(novel.getTitle());
+                titles.add(novel);
             }
 
         }
