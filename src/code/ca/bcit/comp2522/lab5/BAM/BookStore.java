@@ -160,12 +160,12 @@ public class BookStore {
         for (final Novel novel : novels) {
             final String novelTitle;
             novelTitle = novel.getTitle();
-
-            if (novelTitle.toLowerCase().contains(novelTitleParameter.toLowerCase())) {
-                System.out.println(novel.getTitle());
+            if (!(novelTitle == null || novelTitle.isEmpty())) {
+                if (novelTitle.toLowerCase().contains(novelTitleParameter.toLowerCase())) {
+                    System.out.println(novel.getTitle());
+                }
             }
         }
-
     }
 
     /**
@@ -188,14 +188,14 @@ public class BookStore {
         String longestTitle = "";
 
         for (final Novel novel : novels) {
-
-            final String title;
-            title = novel.getTitle();
-            if (title.length() > longestTitle.length()) {
-                longestTitle = title;
+            if (!(novel == null)) {
+                final String title;
+                title = novel.getTitle();
+                if (title.length() > longestTitle.length()) {
+                    longestTitle = title;
+                }
             }
         }
-
         System.out.println(longestTitle);
     }
 
@@ -406,10 +406,12 @@ public class BookStore {
         titles = new ArrayList<>();
 
         for (final Novel novel : novels) {
-            if (novel.getTitle().length() == titleLength) {
-                titles.add(novel);
-            }
+            if (!(novel == null)) {
+                if (novel.getTitle().length() == titleLength) {
+                    titles.add(novel);
+                }
 
+            }
         }
         return titles;
     }
