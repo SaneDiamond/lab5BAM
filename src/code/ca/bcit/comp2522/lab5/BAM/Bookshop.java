@@ -79,7 +79,7 @@ public class Bookshop {
 
         for (final String title : keyList) {
             final Novel novel = novelMap.get(title);
-            System.out.println(novel);
+            System.out.println(novel.getTitle());
         }
     }
 }
