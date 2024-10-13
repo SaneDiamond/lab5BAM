@@ -1,6 +1,12 @@
 package ca.bcit.comp2522.lab5.BAM;
 
-import java.util.*;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Set;
+import java.util.Collections;
 
 /**
  * The Bookshop class manages a collection of novels. It allows for operations
@@ -9,7 +15,10 @@ import java.util.*;
  * This class uses a Map with the title of the novel as the key and the Novel
  * object as the value.
  *
- * @author Ben Nguyen, Andre Dizon, Marcus Lages
+ * @author Ben Nguyen
+ * @author Andre Dizon
+ * @author Marcus Lages
+ *
  * @version 1.0
  */
 public class Bookshop {
@@ -22,26 +31,36 @@ public class Bookshop {
      */
     public Bookshop(final List<Novel> novels) {
         novelMap = new HashMap<>();
-        for (final Novel novel : novels) {
-            novelMap.put(novel.getTitle(), novel); // key: title, value: novel
+
+        if(novels != null) {
+            for (final Novel novel : novels) {
+                if(novel != null) {
+                    novelMap.put(novel.getTitle(), novel); // key: title, value: novel
+                }
+            }
         }
     }
 
     /**
-     * Prints all novel titles using an iterator over the key set of the map.
+     * Prints all titles using an Iterator with map
      */
     public void printAllTitlesUsingIterator() {
-        System.out.println("All Titles in the BookStore:");
         final Set<String> keySet;
         final Iterator<String> iterator;
 
         keySet = novelMap.keySet();
-
         iterator = keySet.iterator();
 
+        System.out.println("\nAll Titles in the BookStore:");
         while (iterator.hasNext()) {
-            final String title = iterator.next();
-            System.out.println(title);
+            final String key;
+            key = iterator.next();
+
+            if(key != null) {
+                final Novel n;
+                n = novelMap.get(key);
+                System.out.println(n);
+            }
         }
     }
 
@@ -50,11 +69,14 @@ public class Bookshop {
      * This method modifies the internal map and removes any entry that matches the condition.
      */
     public void removeTitlesContainingThe() {
-        final Iterator<String> iterator = novelMap.keySet().iterator();
+        final Iterator<String> iterator;
+        iterator = novelMap.keySet().iterator();
 
         while (iterator.hasNext()) {
-            final String title = iterator.next();
-            if (title.toLowerCase().contains("the")) {
+            final String title;
+            title = iterator.next();
+
+            if (title != null && title.toLowerCase().contains("the")) {
                 iterator.remove();
             }
         }
@@ -67,19 +89,22 @@ public class Bookshop {
      * in sorted order. This method excludes titles containing "the".
      */
     public void printSortedNovelsExcludingThe() {
-        System.out.println("\nNovels after removing titles containing 'the', sorted by title:");
         final Set<String> keySet;
         final List<String> keyList;
 
         keySet = novelMap.keySet();
-
         keyList = new ArrayList<>(keySet);
 
         Collections.sort(keyList, String.CASE_INSENSITIVE_ORDER);
 
+        System.out.println("\nNovels after removing titles containing 'the', sorted by title:");
         for (final String title : keyList) {
-            final Novel novel = novelMap.get(title);
-            System.out.println(novel.getTitle());
+            if(title != null) {
+//                final Novel novel;
+//                novel = novelMap.get(title);
+//                System.out.println(novel.getTitle());
+                System.out.println(title);
+            }
         }
     }
 }

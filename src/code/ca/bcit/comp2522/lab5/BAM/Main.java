@@ -2,13 +2,31 @@ package ca.bcit.comp2522.lab5.BAM;
 
 import java.util.List;
 
+/**
+ * Main driver class to use and test the classes BookStore,
+ * Bookshop and Novel.
+ *
+ * @author Ben Nguyen
+ * @author Andre Bernard Chang Dizon
+ * @author Marcus Vinicius Santos Lages
+ *
+ * @version 1.0
+ */
 public class Main {
+
+    /**
+     * Program's entry point for running.
+     *
+     * @param args command line arguments (unused)
+     */
     public static void main(final String[] args) {
         final BookStore bookstore;
         final Novel oldest;
         final List<Novel> fifteenCharTitles;
+        final Bookshop manager;
 
         bookstore = new BookStore("Classic Novels Collection");
+        manager = new Bookshop(bookstore.getNovels());
 
         System.out.println("All Titles in UPPERCASE:");
         bookstore.printAllTitles();
@@ -19,7 +37,6 @@ public class Main {
         System.out.println("\nAll Titles in Alphabetical Order:");
         bookstore.printTitlesInAlphaOrder();
 
-        System.out.println("\nBooks from the 2000s:");
         bookstore.printGroupByDecade(2000);
 
         System.out.println("\nLongest Book Title:");
@@ -45,6 +62,8 @@ public class Main {
 
         fifteenCharTitles.forEach(novel -> System.out.println(novel.getTitle()));
 
-
+        manager.printAllTitlesUsingIterator();
+        manager.removeTitlesContainingThe();
+        manager.printSortedNovelsExcludingThe();
     }
 }
