@@ -27,7 +27,6 @@ public class BookStore {
 
     private final String name;
     private final List<Novel> novels;
-    private final Map<String, Novel> novelMap;
 
     /**
      * Constructs a BookStore object with the specified name and populates
@@ -38,7 +37,6 @@ public class BookStore {
     public BookStore(final String name) {
         novels = new ArrayList<>();
         this.name = name;
-        novelMap = new HashMap<>();
 
         // Populating the list with the provided data
         novels.add(new Novel("The Adventures of Augie March", "Saul Bellow", 1953));
@@ -141,13 +139,6 @@ public class BookStore {
         novels.add(new Novel("White Noise", "Don DeLillo", 1985));
         novels.add(new Novel("White Teeth", "Zadie Smith", 2000));
         novels.add(new Novel("Wide Sargasso Sea", "Jean Rhys", 1966));
-
-        // Populating the novelMap using the author as the key
-        for (final Novel novel : novels) {
-            // key: author, value: novel
-            novelMap.put(novel.getAuthorName(), novel);
-        }
-
     }
 
     public List<Novel> getNovels() {
@@ -183,7 +174,7 @@ public class BookStore {
             if(novel != null) {
                 final String novelTitle;
                 novelTitle = novel.getTitle();
-                if (!(novelTitle == null || novelTitle.isEmpty())) {
+                if (novelTitle != null && !novelTitle.isEmpty()) {
                     if (novelTitle.toLowerCase().contains(novelTitleParameter.toLowerCase())) {
                         System.out.println(novel.getTitle());
                     }
@@ -218,7 +209,7 @@ public class BookStore {
         String longestTitle = "";
 
         for (final Novel novel : novels) {
-            if (!(novel == null)) {
+            if (novel != null) {
                 final String title;
                 title = novel.getTitle();
                 if (title != null && title.length() > longestTitle.length()) {
@@ -380,7 +371,7 @@ public class BookStore {
         oldestNovel = novels.getFirst();
 
         for (final Novel novel : novels) {
-            if (!(novel == null)) {
+            if (novel != null) {
                 final int yearPublished;
                 yearPublished = novel.getYearPublished();
                 if (yearPublished < oldestNovel.getYearPublished()) {
@@ -420,7 +411,7 @@ public class BookStore {
         titles = new ArrayList<>();
 
         for (final Novel novel : novels) {
-            if (!(novel == null)) {
+            if (novel != null) {
                 final String novelTitle;
                 novelTitle = novel.getTitle();
                 if (novelTitle != null && novelTitle.length() == titleLength) {
