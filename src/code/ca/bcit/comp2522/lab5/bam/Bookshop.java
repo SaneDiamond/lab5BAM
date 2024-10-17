@@ -1,4 +1,4 @@
-package ca.bcit.comp2522.lab5.BAM;
+package ca.bcit.comp2522.lab5.bam;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -22,6 +22,7 @@ import java.util.Collections;
  * @version 1.0
  */
 public class Bookshop {
+
     private final Map<String, Novel> novelMap;
 
     /**
@@ -30,11 +31,15 @@ public class Bookshop {
      * @param novels a List of Novel objects to be added to the map.
      */
     public Bookshop(final List<Novel> novels) {
+
         novelMap = new HashMap<>();
 
-        if(novels != null) {
+        if (novels != null) {
+
             for (final Novel novel : novels) {
-                if(novel != null) {
+
+                if (novel != null) {
+
                     novelMap.put(novel.getTitle(), novel); // key: title, value: novel
                 }
             }
@@ -45,6 +50,7 @@ public class Bookshop {
      * Prints all titles using an Iterator with map
      */
     public void printAllTitlesUsingIterator() {
+
         final Set<String> keySet;
         final Iterator<String> iterator;
 
@@ -52,11 +58,14 @@ public class Bookshop {
         iterator = keySet.iterator();
 
         System.out.println("\nAll Titles in the BookStore:");
+
         while (iterator.hasNext()) {
+
             final String key;
             key = iterator.next();
 
-            if(key != null) {
+            if (key != null) {
+
                 final Novel n;
                 n = novelMap.get(key);
                 System.out.println(n);
@@ -69,14 +78,17 @@ public class Bookshop {
      * This method modifies the internal map and removes any entry that matches the condition.
      */
     public void removeTitlesContainingThe() {
+
         final Iterator<String> iterator;
         iterator = novelMap.keySet().iterator();
 
         while (iterator.hasNext()) {
+
             final String title;
             title = iterator.next();
 
             if (title != null && title.toLowerCase().contains("the")) {
+
                 iterator.remove();
             }
         }
@@ -89,6 +101,7 @@ public class Bookshop {
      * in sorted order. This method excludes titles containing "the".
      */
     public void printSortedNovelsExcludingThe() {
+
         final Set<String> keySet;
         final List<String> keyList;
 
@@ -98,8 +111,11 @@ public class Bookshop {
         Collections.sort(keyList, String.CASE_INSENSITIVE_ORDER);
 
         System.out.println("\nNovels after removing titles containing 'the', sorted by title:");
+
         for (final String title : keyList) {
-            if(title != null) {
+
+            if (title != null) {
+
 //                final Novel novel;
 //                novel = novelMap.get(title);
 //                System.out.println(novel.getTitle());

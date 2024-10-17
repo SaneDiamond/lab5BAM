@@ -1,4 +1,4 @@
-package ca.bcit.comp2522.lab5.BAM;
+package ca.bcit.comp2522.lab5.bam;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import java.util.List;
  * Bookshop and Novel.
  *
  * @author Ben Nguyen
- * @author Andre Bernard Chang Dizon
+ * @author Andre Bernard C
  * @author Marcus Vinicius Santos Lages
  *
  * @version 1.0
@@ -20,6 +20,7 @@ public class Main {
      * @param args command line arguments (unused)
      */
     public static void main(final String[] args) {
+
         final BookStore bookstore;
         final Novel oldest;
         final List<Novel> fifteenCharTitles;

@@ -1,4 +1,4 @@
-package ca.bcit.comp2522.lab5.BAM;
+package ca.bcit.comp2522.lab5.bam;
 
 /**
  * Represents a novel with a title, author's name, and year of publication.
@@ -11,6 +11,7 @@ package ca.bcit.comp2522.lab5.BAM;
  * @version 1.0
  */
 public class Novel implements Comparable<Novel> {
+
     private final String title;
     private final String authorName;
     private final int yearPublished;
@@ -23,20 +24,24 @@ public class Novel implements Comparable<Novel> {
      * @param yearPublished the year the novel was published
      */
     public Novel(final String title, final String authorName, final int yearPublished) {
+
         this.title = title;
         this.authorName = authorName;
         this.yearPublished = yearPublished;
     }
 
     public String getTitle() {
+
         return title;
     }
 
     public String getAuthorName() {
+
         return authorName;
     }
 
     public int getYearPublished() {
+
         return yearPublished;
     }
 
@@ -50,11 +55,13 @@ public class Novel implements Comparable<Novel> {
      */
     @Override
     public int compareTo(final Novel novel) {
+
         return title.compareTo(novel.title);
     }
 
     @Override
     public String toString(){
+
         return title;
     }
 }

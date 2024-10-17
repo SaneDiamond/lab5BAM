@@ -1,7 +1,5 @@
-package ca.bcit.comp2522.lab5.BAM;
+package ca.bcit.comp2522.lab5.bam;
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.HashMap;
 import java.util.Collections;
 import java.util.List;
 
@@ -150,10 +148,13 @@ public class BookStore {
      */
     public void printAllTitles() {
         for (final Novel novel : novels) {
-            if(novel != null) {
+
+            if (novel != null) {
+
                 final String title;
                 title = novel.getTitle();
-                if(title != null) {
+
+                if (title != null) {
                     System.out.println(title.toUpperCase());
                 }
             }
@@ -170,12 +171,17 @@ public class BookStore {
         novelTitleParameter = "the";
 
 
-        for (final Novel novel : novels) {
-            if(novel != null) {
+        for (final Novel novel : novels)
+        {
+            if (novel != null)
+            {
                 final String novelTitle;
                 novelTitle = novel.getTitle();
-                if (novelTitle != null && !novelTitle.isEmpty()) {
-                    if (novelTitle.toLowerCase().contains(novelTitleParameter.toLowerCase())) {
+
+                if (novelTitle != null && !novelTitle.isEmpty())
+                {
+                    if (novelTitle.toLowerCase().contains(novelTitleParameter.toLowerCase()))
+                    {
                         System.out.println(novel.getTitle());
                     }
                 }
@@ -192,10 +198,14 @@ public class BookStore {
         novelsCopy = new ArrayList<>(novels);
 
         for (final Novel novel : novelsCopy) {
+
             if (novel != null) {
+
                 final String title;
                 title = novel.getTitle();
-                if(title != null) {
+
+                if (title != null) {
+
                     System.out.println(title.toUpperCase());
                 }
             }
@@ -206,19 +216,36 @@ public class BookStore {
      * Prints the longest book title in the bookstore.
      */
     public void getLongest() {
-        String longestTitle = "";
+        String longestTitle;
+        longestTitle = null;
 
         for (final Novel novel : novels) {
+
+            if (longestTitle == null) {
+
+                longestTitle = novel.getTitle();
+                continue;
+            }
+
             if (novel != null) {
+
                 final String title;
                 title = novel.getTitle();
+
                 if (title != null && title.length() > longestTitle.length()) {
+
                     longestTitle = title;
                 }
             }
         }
 
-        System.out.println(longestTitle);
+        if (longestTitle != null) {
+
+            System.out.println(longestTitle);
+        } else {
+
+            System.out.println("No books, no longest title");
+        }
     }
 
     /**
@@ -231,11 +258,14 @@ public class BookStore {
     public boolean isThereABookWrittenIn(final int yearPublished) {
 
         for (final Novel novel : novels) {
-            if(novel != null) {
+
+            if (novel != null) {
+
                 final int novelsYearPublished;
                 novelsYearPublished = novel.getYearPublished();
 
-                if(novelsYearPublished == yearPublished) {
+                if (novelsYearPublished == yearPublished) {
+
                     return true;
                 }
             }
@@ -251,11 +281,14 @@ public class BookStore {
      * @return the number of books containing the word
      */
     public int howManyBooksContain(final String word) {
+
         if (word == null) {
+
             throw new IllegalArgumentException("Word cannot be null.");
         }
 
         if (word.isBlank()) {
+
             throw new IllegalArgumentException("Word cannot be blank.");
         }
 
@@ -263,12 +296,15 @@ public class BookStore {
         wordContainedWithin = CONTAINS_NOTHING;
 
         for (final Novel novel : novels) {
+
             if (novel != null &&
                 novel.getTitle().toLowerCase().contains(word.toLowerCase())) {
+
                 wordContainedWithin++;
             }
 
         }
+
         return wordContainedWithin;
     }
 
@@ -285,7 +321,8 @@ public class BookStore {
                                              final int endYear) {
 
         // A larger start year than end year is invalid, chance is ZERO_CHANCE
-        if(startYear > endYear) {
+        if (startYear > endYear) {
+
             return ZERO_CHANCE;
         }
 
@@ -297,19 +334,23 @@ public class BookStore {
         booksInRange = MIN_AMOUNT_BOOKS;
         result = ZERO_CHANCE;
 
-        for(final Novel novel: novels) {
-            if(novel != null) {
+        for (final Novel novel: novels) {
+
+            if (novel != null) {
+
                 final int novelsYearPublished;
                 novelsYearPublished = novel.getYearPublished();
 
-                if(novelsYearPublished >= startYear && novelsYearPublished <= endYear) {
+                if (novelsYearPublished >= startYear && novelsYearPublished <= endYear) {
+
                     booksInRange++;
                 }
             }
         }
 
         // If there's no books in range, then the percentage is ZERO_CHANCE
-        if(booksInRange >= MIN_AMOUNT_BOOKS) {
+        if (booksInRange >= MIN_AMOUNT_BOOKS) {
+
             result = (double) booksInRange / allBooks;
             result *= RATIO_TO_PERCENTAGE;
         }
@@ -340,10 +381,14 @@ public class BookStore {
 
         // Loop through novels and check if they fall within the decade
         for (final Novel novel : novels) {
-            if(novel != null) {
+
+            if (novel != null) {
+
                 final int year;
                 year = novel.getYearPublished();
+
                 if (year >= startYear && year <= endYear) {
+
                     sb.append("- ")
                             .append(novel.getTitle())
                             .append(" (")
@@ -354,10 +399,11 @@ public class BookStore {
             }
         }
 
-        // me when no books
         if (!booksFound) {
+
             sb.append("No books in decade");
         }
+
         System.out.println(sb.toString());
     }
 
@@ -367,14 +413,19 @@ public class BookStore {
      * @return the novel with the oldest publication year
      */
     public Novel getOldestBook(){
+
         Novel oldestNovel;
         oldestNovel = novels.getFirst();
 
         for (final Novel novel : novels) {
+
             if (novel != null) {
+
                 final int yearPublished;
                 yearPublished = novel.getYearPublished();
+
                 if (yearPublished < oldestNovel.getYearPublished()) {
+
                     oldestNovel = novel;
                 }
             }
@@ -387,6 +438,7 @@ public class BookStore {
      * Prints the sorted list of novels by title, excluding titles containing "the".
      */
     private void printSortedNovels() {
+
         System.out.println("\nNovels sorted by title (excluding titles containing \"the\"):");
         final List<Novel> sortedTitles;
 
@@ -394,7 +446,9 @@ public class BookStore {
         Collections.sort(sortedTitles);
 
         for (final Novel novel : sortedTitles) {
-            if(novel != null) {
+
+            if (novel != null) {
+
                 System.out.println(novel.toString());
             }
         }
@@ -407,20 +461,24 @@ public class BookStore {
      * @return a list of novels with titles of the specified length
      */
     public List<Novel> getBooksThisLength(final int titleLength) {
+
         final List<Novel> titles;
         titles = new ArrayList<>();
 
         for (final Novel novel : novels) {
+
             if (novel != null) {
+
                 final String novelTitle;
                 novelTitle = novel.getTitle();
+
                 if (novelTitle != null && novelTitle.length() == titleLength) {
                     titles.add(novel);
                 }
             }
         }
+
         return titles;
     }
 
 }
-
